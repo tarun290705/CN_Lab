@@ -1,3 +1,5 @@
+# 7. To simulate and study stop and wait protocol
+
 set ns [ new Simulator ]
 
 set tr [ open out.tr w ]
