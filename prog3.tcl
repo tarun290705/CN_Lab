@@ -23,25 +23,28 @@ $ns make-lan "$n3 $n4 $n5" 2Mb 10ms LL Queue/DropTail Mac/802_3
 $ns duplex-link $n0 $n3 1Mb 10ms DropTail
 
 set tcp1 [ new Agent/TCP ]
-set tcp2 [ new Agent/TCP ]
-set sink1 [ new Agent/TCPSink ]
-set sink2 [ new Agent/TCPSink ]
-set cbr1 [ new Application/Traffic/CBR ]
-set cbr2 [ new Application/Traffic/CBR ]
-
+$tcp1 set class_ 1
 $ns attach-agent $n4 $tcp1
+
+set sink1 [ new Agent/TCPSink ]
 $ns attach-agent $n2 $sink1
-$ns attach-agent $n1 $tcp2
-$ns attach-agent $n5 $sink2
 
 $ns connect $tcp1 $sink1
+
+set tcp2 [ new Agent/TCP ]
+$tcp2 set class_ 2
+$ns attach-agent $n1 $tcp2
+
+set sink2 [ new Agent/TCPSink ]
+$ns attach-agent $n5 $sink2
+
 $ns connect $tcp2 $sink2
 
+set cbr1 [ new Application/Traffic/CBR ]
 $cbr1 attach-agent $tcp1
-$cbr2 attach-agent $tcp2
 
-$tcp1 set class_ 1
-$tcp2 set class_ 2
+set cbr2 [ new Application/Traffic/CBR ]
+$cbr2 attach-agent $tcp2
 
 proc finish {} {
   	global ns tr nam
@@ -51,7 +54,7 @@ proc finish {} {
   	exec nam out.nam &
   	exec xgraph tcp1.xg tcp2.xg &
   	exit 0
-  }
+}
  
 proc Draw {Agent File} {
 	global ns 

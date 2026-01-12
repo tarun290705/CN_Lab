@@ -23,15 +23,14 @@ $ns duplex-link $n3 $n4 1Mb 20ms DropTail
 $ns duplex-link $n3 $n5 1Mb 20ms DropTail
 
 set tcp [ new Agent/TCP ]
-set sink [ new Agent/TCPSink ]
-
-set ftp [ new Application/FTP ]
-
 $ns attach-agent $n1 $tcp
+
+set sink [ new Agent/TCPSink ]
 $ns attach-agent $n4 $sink 
 
 $ns connect $tcp $sink
 
+set ftp [ new Application/FTP ]
 $ftp attach-agent $tcp
 
 proc finish {} {

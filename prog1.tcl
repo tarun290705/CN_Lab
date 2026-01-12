@@ -19,22 +19,21 @@ $ns queue-limit $n0 $n1 3
 $ns queue-limit $n1 $n2 3
 
 set tcp [ new Agent/TCP ]
-set sink [ new Agent/TCPSink ]
-
 $ns attach-agent $n0 $tcp
+
+set sink [ new Agent/TCPSink ]
 $ns attach-agent $n2 $sink
+
 $ns connect $tcp $sink
 
 set cbr [ new Application/Traffic/CBR ]
 $cbr attach-agent $tcp
 
 proc finish {} {
-
 	global ns nam tr 
 	$ns flush-trace
 	close $tr
 	close $nam
-	
 	exec nam out.nam &
 	exec echo "The number of packets dropped are: " &
 	exec grep -c "^d" out.tr &

@@ -52,23 +52,24 @@ $ns at 0.0 "$n3 setdest 100.0 100.0 25.0"
 set tcp1 [ new Agent/TCP ]
 $ns attach-agent $n0 $tcp1
 
-set tcp2 [ new Agent/TCP ]
-$ns attach-agent $n2 $tcp2
-
 set sink1 [ new Agent/TCPSink ]
 $ns attach-agent $n1 $sink1
 
+$ns connect $tcp1 $sink1
+
+set tcp2 [ new Agent/TCP ]
+$ns attach-agent $n2 $tcp2
+
 set sink2 [ new Agent/TCPSink ]
 $ns attach-agent $n3 $sink2
+
+$ns connect $tcp2 $sink2
 
 set cbr1 [ new Application/Traffic/CBR ]
 $cbr1 attach-agent $tcp1
 
 set cbr2 [ new Application/Traffic/CBR ]
 $cbr2 attach-agent $tcp2
-
-$ns connect $tcp1 $sink1
-$ns connect $tcp2 $sink2
 
 proc finish {} {
     global ns tr nam

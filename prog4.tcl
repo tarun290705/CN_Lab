@@ -23,11 +23,10 @@ $ns duplex-link $n3 $n4 10Mb 10ms DropTail
 $ns duplex-link $n4 $n0 10Mb 10ms DropTail
 
 set tcp [ new Agent/TCP ]
-set sink [new Agent/TCPSink ]
-
 $tcp set fid_ 1
-
 $ns attach-agent $n0 $tcp
+
+set sink [new Agent/TCPSink ]
 $ns attach-agent $n3 $sink
 
 $ns connect $tcp $sink
@@ -42,7 +41,7 @@ proc finish {} {
      close $tr 
      exec nam out.nam &
      exit 0
-     }
+}
 
 $ns at 0.1 "$cbr start"
 $ns at 1.0 "$cbr stop"

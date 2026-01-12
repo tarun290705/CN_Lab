@@ -7,7 +7,7 @@ BEGIN {No_of_pkts=0;}
 }
 END {
     Throughput = No_of_pkts * 8 / $2 / 1000000;
-    printf("\n\n\t Throughput = %f bpms\n\n", Throughput);
+    printf("\nThroughput = %f bpms\n", Throughput);
 }
 
 

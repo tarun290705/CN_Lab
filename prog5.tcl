@@ -26,12 +26,12 @@ $ns duplex-link $n0 $n4 10Mb 10ms DropTail
 $ns duplex-link $n0 $n5 10Mb 10ms DropTail
 
 set tcp [ new Agent/TCP ]
-set sink [ new Agent/TCPSink ]
-
 $tcp set fid_ 1
-
 $ns attach-agent $n1 $tcp
+
+set sink [ new Agent/TCPSink ]
 $ns attach-agent $n5 $sink
+
 $ns connect $tcp $sink
 
 set cbr [ new Application/Traffic/CBR ]
@@ -40,7 +40,7 @@ $cbr attach-agent $tcp
 proc finish {} {
 	global ns nam tr 
 	$ns flush-trace
-        close $tr
+    close $tr
 	close $nam
 	exec nam out.nam &
 	exit 0

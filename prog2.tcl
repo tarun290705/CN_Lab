@@ -1,22 +1,22 @@
 # 2. Implement transmission of ping messages/trace route over a network topology consisting of 6 nodes and find the number of packets dropped due to congestion.
 
-set ns [new Simulator]
+set ns [ new Simulator ]
 
 $ns color 1 blue
 $ns color 2 red
 
-set nam [open out.nam w]
+set nam [ open out.nam w ]
 $ns namtrace-all $nam
 
-set tr [open out.tr w]
+set tr [ open out.tr w ]
 $ns trace-all $tr
 
-set n0 [$ns node]
-set n1 [$ns node]
-set n2 [$ns node]
-set n3 [$ns node]
-set n4 [$ns node]
-set n5 [$ns node]
+set n0 [ $ns node ]
+set n1 [ $ns node ]
+set n2 [ $ns node ]
+set n3 [ $ns node ]
+set n4 [ $ns node ]
+set n5 [ $ns node ]
 
 $ns duplex-link $n0 $n1 0.1Mb 10ms DropTail
 $ns duplex-link $n1 $n2 0.2Mb 10ms DropTail
@@ -47,8 +47,9 @@ $ns connect $p0 $p1
 set tcp [ new Agent/TCP ]
 $tcp set class_ 2
 $tcp set fid_ 1
-set sink [ new Agent/TCPSink ]
 $ns attach-agent $n0 $tcp
+
+set sink [ new Agent/TCPSink ]
 $ns attach-agent $n5 $sink
 
 $ns connect $tcp $sink
@@ -61,8 +62,8 @@ $cbr attach-agent $tcp
 
 proc finish {} {
 	global ns tr nam
-        $ns flush-trace 	
-        close $tr
+    $ns flush-trace 	
+    close $tr
 	close $nam
 	exec nam out.nam &
 	exec echo "The number of ping message lost is: " &

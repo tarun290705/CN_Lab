@@ -26,8 +26,8 @@ proc cell_topo {} {
 }
 
 switch gsm {
-    gsm-
-    gprs-
+    gsm -
+    gprs -
     umts {cell_topo}
 }
 
